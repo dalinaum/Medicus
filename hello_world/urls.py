@@ -22,4 +22,6 @@ urlpatterns = [
     path("", core_views.index),
     path("admin/", admin.site.urls),
     path("__reload__/", include("django_browser_reload.urls")),
+    path('api-auth/', include('rest_framework.urls')),
+    path("medicus/", include('medicus.urls')),
 ]
