@@ -52,4 +52,4 @@ class OpeningHour(models.Model):
         return f"{formatted} (점심 {self.lunch_hour} ~ {self.lunch_end_hour})"
 
     class Meta:
-        unique_together = ('doctor', 'weekday')
+        unique_together = ('doctor', 'weekday') 
