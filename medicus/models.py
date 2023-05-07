@@ -37,7 +37,8 @@ class Doctor(models.Model):
 
 
 class OpeningHour(models.Model):
-    doctor = models.ForeignKey(Doctor, related_name='opening_hours', on_delete=models.CASCADE)
+    doctor = models.ForeignKey(
+        Doctor, related_name='opening_hours', on_delete=models.CASCADE)
     weekday = models.IntegerField(choices=WEEKDAYS)
     from_hour = models.TimeField()
     to_hour = models.TimeField()
@@ -51,4 +52,4 @@ class OpeningHour(models.Model):
         return f"{formatted} (점심 {self.lunch_hour} ~ {self.lunch_end_hour})"
 
     class Meta:
-        unique_together = ('doctor', 'weekday') 
+        unique_together = ('doctor', 'weekday')
