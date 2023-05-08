@@ -46,10 +46,26 @@ class OpeningHour(models.Model):
     lunch_end_hour = models.TimeField(null=True, blank=True)
 
     def __str__(self):
-        formatted = f"{self.doctor} {self.from_hour} ~ {self.to_hour}"
+        formatted = f"{self.doctor} {WEEKDAYS[self.weekday][1]} {self.from_hour} ~ {self.to_hour}"
         if self.lunch_hour is None:
             return formatted
         return f"{formatted} (점심 {self.lunch_hour} ~ {self.lunch_end_hour})"
 
     class Meta:
         unique_together = ('doctor', 'weekday')
+
+
+class Appointment(models.Model):
+    doctor = models.ForeignKey(
+        Doctor, related_name='apointments', on_delete=models.CASCADE)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    consultation_datetime = models.DateTimeField()
+    accepted = models.BooleanField(default=False)
+    accepted_at = models.DateTimeField(blank=True, null=True)
+    expiration = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        formatted = f"{self.doctor} {self.patient} {self.consultation_datetime}"
+        return formatted

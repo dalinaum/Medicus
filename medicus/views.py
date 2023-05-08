@@ -1,8 +1,8 @@
-# from django.shortcuts import render
-from django.db.models import Q
-from rest_framework import filters, generics
-from .serializiers import DoctorSereailizer
+from rest_framework import filters, generics, status
+from rest_framework.response import Response
+from .serializiers import DoctorSereailizer, CreateAppointmentSerializer
 from .models import Doctor
+from .utils import get_available_doctors
 
 
 class DoctorList(generics.ListAPIView):
@@ -20,18 +20,16 @@ class AvailableDoctorList(generics.ListAPIView):
         candidate = self.kwargs['candidate']
         weekday = candidate.weekday() + 1
         time = candidate.time()
-        valid_weekday = Q(opening_hours__weekday=weekday)
-        valid_opening_hour = Q(
-            Q(opening_hours__from_hour__lte=time) &
-            Q(opening_hours__to_hour__gte=time)
-        )
-        not_lunchtime = Q(
-            Q(opening_hours__lunch_hour__isnull=True) |
-            ~Q(
-                Q(opening_hours__lunch_hour__lte=time) &
-                Q(opening_hours__lunch_end_hour__gte=time)
-            )
-        )
-        queryset = Doctor.objects.filter(
-            valid_weekday & valid_opening_hour & not_lunchtime)
+        queryset = get_available_doctors(weekday, time)
         return queryset
+
+
+class CreateAppointment(generics.CreateAPIView):
+    serializer_class = CreateAppointmentSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)

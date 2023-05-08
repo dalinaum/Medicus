@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Doctor, MedicalSpecialty, OpeningHour, Patient
+from .models import Doctor, MedicalSpecialty, OpeningHour, Patient, Appointment
 
 
 admin.site.register(Patient)
@@ -21,3 +21,19 @@ class DoctorAdmin(admin.ModelAdmin):
     @staticmethod
     def specialties_in_one_line(doctor):
         return ", ".join(str(v) for v in doctor.specialties.all())
+
+
+@admin.register(Appointment)
+class AppointmentAdmin(admin.ModelAdmin):
+    list_display = [
+        'doctor',
+        'patient',
+        'consultation_datetime',
+        'accepted',
+        'expiration',
+    ]
+    list_display_links = [
+        'doctor',
+        'patient',
+        'consultation_datetime',
+    ]
