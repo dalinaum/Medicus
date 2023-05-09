@@ -123,7 +123,7 @@ class InlinePatientSerializer(serializers.ModelSerializer):
         ]
 
 
-class ListAppointmentSerializer(serializers.ModelSerializer):
+class AppointmentSerializer(serializers.ModelSerializer):
     patient = InlinePatientSerializer()
 
     class Meta:
