@@ -12,16 +12,16 @@ GitHub Codespace에서 동작할 수 있게 [환경 설정](.devcontainer)이 �
 
 로컬에서 의존성 설정은 `requirements.txt`로 설정합니다.
 
-```python
+```sh
 pip install -r requirements.txt
 ```
 
 마이그레이션은 다음의 커맨드로 합니다.
 
-```python
+```sh
 python manage.py migrate
 ```
 
-```python
+```sh
 python manage.py runserver
 ```
