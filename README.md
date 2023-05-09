@@ -48,7 +48,7 @@ python manage.py runserver
 
 ### 특정 날짜 시간에 영업중인 의사 검색
 
- * 요청 주소: [/medicus/doctor/<datetime>/](/medicus/doctor/<datetime>/)
+ * 요청 주소: [/medicus/doctor/_datetime_/](/medicus/doctor/_datetime_/)
  * 예: [/medicus/doctor/2023-03-11T11:23:33/](/medicus/doctor/2023-03-11T11:23:33/)
  * 메서드: GET
 
@@ -123,7 +123,7 @@ python manage.py runserver
 
 ### 진료 요청
 
- * 요청 주소: [/medicus/doctor/<doctor_id>/appointment/](/medicus/doctor/<doctor_id>/appointment/)
+ * 요청 주소: [/medicus/doctor/_doctor_id_/appointment/](/medicus/doctor/_doctor_id_/appointment/)
  * 예: [/medicus/doctor/1/appointment/](/medicus/doctor/1/appointment/)
  * 메서드: POST
 
@@ -170,7 +170,7 @@ python manage.py runserver
 
 ### 진료 요청 확인
 
- * 요청 주소: [/medicus/doctor/<doctor_id>/pending/](/medicus/doctor/<doctor_id>/pending/)
+ * 요청 주소: [/medicus/doctor/_doctor_id_/pending/](/medicus/doctor/_doctor_id_/pending/)
  * 예: [/medicus/doctor/1/pending/](/medicus/doctor/1/pending/)
  * 메서드: GET
 
@@ -199,7 +199,7 @@ python manage.py runserver
 
 ### 진료 요청 승인
 
- * 요청 주소: [/medicus/accept_appointment/<appointment_id>/](/medicus/accept_appointment/<appointment_id>/)
+ * 요청 주소: [/medicus/accept_appointment/_appointment_id_/](/medicus/accept_appointment/_appointment_id_/)
  * 예: [/medicus/accept_appointment/21/](/medicus/accept_appointment/21/)
  * 메서드: PATCH
 
