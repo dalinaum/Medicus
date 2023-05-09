@@ -13,6 +13,9 @@ WEEKDAYS = [
 
 
 class Patient(models.Model):
+    """
+    환자 정보를 다루는 모델입니다.
+    """
     name = models.CharField(max_length=50)
 
     def __str__(self):
@@ -20,6 +23,9 @@ class Patient(models.Model):
 
 
 class MedicalSpecialty(models.Model):
+    """
+    진료과목 정보를 다루는 모델입니다.
+    """
     name = models.CharField(max_length=50)
 
     def __str__(self):
@@ -27,6 +33,9 @@ class MedicalSpecialty(models.Model):
 
 
 class Doctor(models.Model):
+    """
+    의사를 다루는 모델입니다.
+    """
     name = models.CharField(max_length=50)
     office_name = models.CharField(max_length=50)
     specialties = models.ManyToManyField(MedicalSpecialty)
@@ -37,6 +46,9 @@ class Doctor(models.Model):
 
 
 class OpeningHour(models.Model):
+    """
+    의사의 영업시간을 다루는 모델입니다.
+    """
     doctor = models.ForeignKey(
         Doctor, related_name='opening_hours', on_delete=models.CASCADE)
     weekday = models.IntegerField(choices=WEEKDAYS)
@@ -52,10 +64,19 @@ class OpeningHour(models.Model):
         return f"{formatted} (점심 {self.lunch_hour} ~ {self.lunch_end_hour})"
 
     class Meta:
+        """
+        영업시간에서 의사와 요일을 함께 유니크로 다룹니다.
+        의사는 매일 다른 영업시간을 가집니다.
+        """
         unique_together = ('doctor', 'weekday')
 
 
 class Appointment(models.Model):
+    """
+    진료요청을 받는 모델입니다.
+    진료를 원하는 시간을 의미하는 consultation_datetime이 있고
+    요청의 만료 시간인 expiration이 있습니다.
+    """
     doctor = models.ForeignKey(
         Doctor, related_name='apointments', on_delete=models.CASCADE)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)

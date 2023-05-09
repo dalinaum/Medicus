@@ -1,3 +1,4 @@
+"""Medicus 모듈의 Serializer들"""
 import datetime
 from rest_framework import serializers
 from . import models
@@ -5,13 +6,25 @@ from .utils import get_available_doctors
 
 
 class MedicalSpecialtySerializer(serializers.ModelSerializer):
+    """
+    진료과목에 대한 Serializer
+    """
     class Meta:
+        """
+        진료과목 모델의 모든 항목을 가져오도록 설정하는 메타정보
+        """
         model = models.MedicalSpecialty
         fields = '__all__'
 
 
 class OpeningHourSerializer(serializers.ModelSerializer):
+    """
+    영업시간에 관련한 Serialzier
+    """
     class Meta:
+        """
+        영업시간에 관한 설정 일부 필드만 가져와서 지정.
+        """
         model = models.OpeningHour
         fields = [
             'weekday',
@@ -23,10 +36,16 @@ class OpeningHourSerializer(serializers.ModelSerializer):
 
 
 class DoctorSereailizer(serializers.ModelSerializer):
+    """
+    의사에대한 시리얼라이저, 진료과목과 영업시간을 포함함.
+    """
     specialties = MedicalSpecialtySerializer(many=True)
     opening_hours = OpeningHourSerializer(many=True)
 
     class Meta:
+        """
+        Doctor 모델에서 일부 필드만 가져오도록 설정
+        """
         model = models.Doctor
         fields = [
             'id',
@@ -39,6 +58,12 @@ class DoctorSereailizer(serializers.ModelSerializer):
 
 
 class CreateAppointmentSerializer(serializers.ModelSerializer):
+    """
+    진료 요청을 하는 시리얼라이저, 뷰 대신에 시리얼라이저에서
+    영업시간, 예약 시간을 검증하게 해보고, expiration도 계산하게
+    해보았습니다.
+    """
+
     def validate(self, attrs):
         consultation_datetime = attrs['consultation_datetime']
         weekday = consultation_datetime.weekday() + 1
@@ -103,6 +128,9 @@ class CreateAppointmentSerializer(serializers.ModelSerializer):
             the_date = the_date + one_day
 
     class Meta:
+        """
+        Appointment 모델과 연동하는 설정.
+        """
         model = models.Appointment
         fields = [
             'id',
@@ -110,13 +138,16 @@ class CreateAppointmentSerializer(serializers.ModelSerializer):
             'patient',
             'consultation_datetime',
         ]
-        read_only_fields = [
-            'read_only_fields'
-        ]
 
 
 class InlinePatientSerializer(serializers.ModelSerializer):
+    """
+    AppointmentSeriailizer에서 환자 정보를 보여주기 위한 용도의 Serialzier
+    """
     class Meta:
+        """
+        Patinet에서 환자 이름만 가져옴.
+        """
         model = models.Patient
         fields = [
             'name'
@@ -124,9 +155,15 @@ class InlinePatientSerializer(serializers.ModelSerializer):
 
 
 class AppointmentSerializer(serializers.ModelSerializer):
+    """
+    진료 요청 정보를 다루는 Serializer
+    """
     patient = InlinePatientSerializer()
 
     class Meta:
+        """
+        Appointment에서 일부 정보를 연동.
+        """
         model = models.Appointment
         fields = [
             'id',
