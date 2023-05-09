@@ -1,12 +1,26 @@
-# GitHub Codespaces ♥️ Django
+# Medicus
 
-Welcome to your shiny new Codespace running Django! We've got everything fired up and running for you to explore Django.
+간단한 진료 예약, 검색 API
 
-You've got a blank canvas to work on from a git perspective as well. There's a single initial commit with the what you're seeing right now - where you go from here is up to you!
+## 설정
 
-Everything you do here is contained within this one codespace. There is no repository on GitHub yet. If and when you’re ready you can click "Publish Branch" and we’ll create your repository and push up your project. If you were just exploring then and have no further need for this code then you can simply delete your codespace and it's gone forever.
+### GitHub Codespace 설정
 
-To run this application:
+GitHub Codespace에서 동작할 수 있게 [환경 설정](.devcontainer)이 있습니다. 상단 우측의 `Code` > `Codespaces`를 클릭해 진행할 수 있습니다.
+
+### 로컬 설정
+
+로컬에서 의존성 설정은 `requirements.txt`로 설정합니다.
+
+```python
+pip install -r requirements.txt
+```
+
+마이그레이션은 다음의 커맨드로 합니다.
+
+```python
+python manage.py migrate
+```
 
 ```python
 python manage.py runserver
