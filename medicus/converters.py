@@ -6,7 +6,7 @@ class DateTimeConverter:
     라우터에서 사용할 컨버터로 2023-03-11T11:23:33와 같은
     형태로 주소가 오면 datetime으로 파싱합니다.
     """
-    regex = '\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}'
+    regex = r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}'
     format = '%Y-%m-%dT%H:%M:%S'
 
     def to_python(self, value):
