@@ -29,12 +29,12 @@ class DoctorSereailizer(serializers.ModelSerializer):
     class Meta:
         model = models.Doctor
         fields = [
-            "id",
-            "name",
-            "office_name",
-            "specialties",
-            "non_reimbursable",
-            "opening_hours"
+            'id',
+            'name',
+            'office_name',
+            'specialties',
+            'non_reimbursable',
+            'opening_hours',
         ]
 
 
@@ -105,11 +105,11 @@ class CreateAppointmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Appointment
         fields = [
-            "id",
-            "doctor",
-            "patient",
-            "consultation_datetime",
+            'id',
+            'doctor',
+            'patient',
+            'consultation_datetime',
         ]
         read_only_fields = [
-            "read_only_fields"
+            'read_only_fields'
         ]
