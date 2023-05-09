@@ -113,3 +113,24 @@ class CreateAppointmentSerializer(serializers.ModelSerializer):
         read_only_fields = [
             'read_only_fields'
         ]
+
+
+class InlinePatientSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Patient
+        fields = [
+            'name'
+        ]
+
+
+class ListAppointmentSerializer(serializers.ModelSerializer):
+    patient = InlinePatientSerializer()
+
+    class Meta:
+        model = models.Appointment
+        fields = [
+            'id',
+            'patient',
+            'consultation_datetime',
+            'expiration'
+        ]
