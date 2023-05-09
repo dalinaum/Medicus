@@ -46,7 +46,7 @@ class OpeningHour(models.Model):
     lunch_end_hour = models.TimeField(null=True, blank=True)
 
     def __str__(self):
-        formatted = f"{self.doctor} {WEEKDAYS[self.weekday][1]} {self.from_hour} ~ {self.to_hour}"
+        formatted = f"{self.doctor} {WEEKDAYS[self.weekday - 1][1]} {self.from_hour} ~ {self.to_hour}"
         if self.lunch_hour is None:
             return formatted
         return f"{formatted} (점심 {self.lunch_hour} ~ {self.lunch_end_hour})"
